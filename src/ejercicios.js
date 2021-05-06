@@ -1,4 +1,3 @@
-export function multiplicarPor10(array) {}
 export function multiplicarPor10(array) {
     const MULTIPLICADOR_DESEADO = 10;
     const nuevoArray = [];
@@ -6,12 +5,8 @@ export function multiplicarPor10(array) {
         const nuevoElemento = array[index] * MULTIPLICADOR_DESEADO;
         nuevoArray.push(nuevoElemento);
     }
-
-export function soloPares(array) {}
     return nuevoArray;
-    
 }
-
 
 export function soloPares(array) {
     const nuevoArray = [];
@@ -21,7 +16,6 @@ export function soloPares(array) {
             nuevoArray.push(array[index]);
         }
     }
-
     return nuevoArray;
 }
 
@@ -118,6 +112,49 @@ export function duplicarMatriz(array) {
         return arrayDuplicado;
 }
 
-export function mayoresDeEdadValidados(array) {}
+export function mayoresDeEdadValidados(array) {
+    const nuevoArray = [...array];
 
-export function transformarObjetoEnArray(objeto) {}
+    const arrayFinal = 
+        nuevoArray.map(objeto => {
+            objeto.mayor = esMayorDe18(objeto.edad);
+            return objeto; 
+            
+        });
+    
+    return arrayFinal;
+
+    function esMayorDe18(edad) {
+        if (edad < 18) {
+            return false;
+        }
+
+        return true;
+    }
+}
+
+export function transformarObjetoEnArray(objeto) {
+
+    const nuevoObjeto = {...objeto};
+
+    const conversionAArray = agregarPropiedadID(nuevoObjeto);
+    return conversionAArray;
+
+    function agregarPropiedadID(obj) {
+        
+        
+        const keysObjeto = Object.keys(obj);
+        const valuesObjeto = Object.values(obj);
+      
+        const arrayFinal =
+        valuesObjeto.map((elemento, i) => {
+          
+          const nuevo = {'id': keysObjeto[i], ...elemento};
+          
+          return nuevo;
+        })
+      
+        return arrayFinal
+      }
+      
+}

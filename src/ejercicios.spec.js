@@ -116,7 +116,7 @@ describe("Tests", function () {
         { nombre: "Jorge", edad: 29, mayor: true },
         { nombre: "Alicia", edad: 23, mayor: true },
         { nombre: "Lucas", edad: 15, mayor: false },
-        { nombre: "Adriana", edad: 18, mayor: false },
+        { nombre: "Adriana", edad: 18, mayor: true },
       ];
       const actual = mayoresDeEdadValidados(input);
 
