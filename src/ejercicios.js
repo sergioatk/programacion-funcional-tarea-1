@@ -1,160 +1,80 @@
 export function multiplicarPor10(array) {
     const MULTIPLICADOR_DESEADO = 10;
-    const nuevoArray = [];
-    for (let index in array) {
-        const nuevoElemento = array[index] * MULTIPLICADOR_DESEADO;
-        nuevoArray.push(nuevoElemento);
-    }
-    return nuevoArray;
+    const arrayMultiplicado = array.map(num => num * MULTIPLICADOR_DESEADO);
+    return arrayMultiplicado;
 }
 
 export function soloPares(array) {
-    const nuevoArray = [];
-
-    for (let index in array) {
-        if (array[index] % 2 === 0) {
-            nuevoArray.push(array[index]);
-        }
-    }
-    return nuevoArray;
+    const arraySoloPares = array.filter(num => num % 2 === 0)
+    return arraySoloPares;
 }
 
 export function moverALaDerecha(array) {
-    
-    const nuevoArray = [...array];
-    const elementoAMover = nuevoArray[nuevoArray.length - 1];
-    const arrSinUltimoIndice = nuevoArray.slice(0,-1);
-    const arrayFinal = [elementoAMover, ...arrSinUltimoIndice];
-
-    return arrayFinal;
+    const arraySinFinal = array.slice(0, [array.length - 1]);
+    const nuevoArray = [array[array.length - 1], ...arraySinFinal];
+    return nuevoArray;
 }
 
 export function soloUnaPalabra(array) {
-    const nuevoArray = [...array];
-    const arraySinEspacios = 
-        nuevoArray.filter(elemento => {
-            return elemento.split(' ').length === 1;
-        })
-
-    return arraySinEspacios;
+    const arraySoloUnaPalabra = array.filter(elemento => elemento.split(' ').length === 1)
+    return arraySoloUnaPalabra;
 }
 
 export function soloArraysPositivos(array) {
-    
-    const nuevoArray = [...array];
-    const esPositivo = (num) => num > 0;
-    const soloPositivos =
-          nuevoArray.filter((array, index) => {
-              return array.every(esPositivo);
-          })
-
-    return soloPositivos;
-          
+    const esPositivo = num => num > 0;
+    const arraySoloNumerosPositivos = array.filter(array => array.every(esPositivo));
+    return arraySoloNumerosPositivos;
 }
 
 export function soloVocales(array) {
-    const nuevoArr = [...array]
-    const arrSinConsonantes =
-        nuevoArr.map(palabra => {
-        return palabra.split('').filter(letra => {
-            return letra === 'a' ||  letra === 'e' ||  letra === 'i' ||  letra === 'o' ||  letra === 'u';
-        }).join('');
-        });
-
-    return arrSinConsonantes;
+    const vocales = ['a', 'e', 'i', 'o', 'u'];
+    const arraySoloVocales = array.map(palabra => palabra.split('').filter(letra => vocales.includes(letra)).join(''));
+    return arraySoloVocales;
 }
 
 export function todasVocalesIguales(array) {
-    const nuevoArr = [...array]
-    const arraySoloVocalesIguales = 
-    nuevoArr.filter(string => {
-        const stringSinVocales = devolverStringSoloConVocales(string);
-        return tieneCaracteresIguales(stringSinVocales);
-    })
+    const arrayPalabrasVocalesIguales = array.filter(palabra => tieneCaracteresIguales(devolverStringSoloConVocales(palabra)));
+   
+    return arrayPalabrasVocalesIguales;
 
-    return arraySoloVocalesIguales;
-
-    function tieneCaracteresIguales(string = '', index = 1, letraActual = string[1]) { 
-        if (!string[index]) {
-            return true;
+    function tieneCaracteresIguales(string) {
+        if (string.length === 1) {
+          return true;
         }
-        const indexSiguiente = index + 1;
-        const indexAnterior = index - 1;
-        const letraAnterior = string[indexAnterior];
-        if (letraActual === letraAnterior) {   
-            return tieneCaracteresIguales(string, indexSiguiente, string[indexSiguiente]);
-        } else {
-            return false
+    
+        if (string[0] === string[1]) {
+          return tieneCaracteresIguales(string.slice(1));
         }
-    }
+    
+        return false;
+      }
       
-    function devolverStringSoloConVocales(string) { 
-        const nuevoString = string.split('');
-        const stringSoloVocales = 
-        nuevoString.filter(palabra => {
-            return palabra.split('').filter(letra => {
-                return letra === 'a' ||  letra === 'e' ||  letra === 'i' ||  letra === 'o' ||  letra === 'u';
-            }).join(''); 
-        })
+      function devolverStringSoloConVocales(string) {
+        const vocales = ['a', 'e', 'i', 'o', 'u'];
+        const stringSoloVocales = string.split('').filter(letra => vocales.includes(letra)).join('');
         return stringSoloVocales;
-    }
+      }
 }
 
 export function duplicarMatriz(array) {
-    const nuevoArray = [...array];
-    const arrayDuplicado = 
-        nuevoArray.map((arreglo, i) => {
-            return arreglo.map(numero => {
-                return numero * 2;
-            })
-        });
-
-        return arrayDuplicado;
+    const arrayDuplicado = array.map(subArray => subArray.map(elemento => elemento * 2));
+    return arrayDuplicado;
 }
 
 export function mayoresDeEdadValidados(array) {
-    const nuevoArray = [...array];
+    const arrayConPropiedadMayor = array.map(persona => {
+        return {...persona, 'mayor': (persona.edad >= 18)};
+      });
 
-    const arrayFinal = 
-        nuevoArray.map(objeto => {
-            objeto.mayor = esMayorDe18(objeto.edad);
-            return objeto; 
-            
-        });
-    
-    return arrayFinal;
-
-    function esMayorDe18(edad) {
-        if (edad < 18) {
-            return false;
-        }
-
-        return true;
-    }
+    return arrayConPropiedadMayor;
 }
 
 export function transformarObjetoEnArray(objeto) {
-
-    const nuevoObjeto = {...objeto};
-
-    const conversionAArray = agregarPropiedadID(nuevoObjeto);
-    return conversionAArray;
-
-    function agregarPropiedadID(obj) {
-        
-        
-        const keysObjeto = Object.keys(obj);
-        const valuesObjeto = Object.values(obj);
-      
-        const arrayFinal =
-        valuesObjeto.map((elemento, i) => {
-          
-          const nuevo = {'id': keysObjeto[i], ...elemento};
-          
-          return nuevo;
+        const keysObjeto = Object.keys(objeto);
+        const valuesObjeto = Object.values(objeto);
+        const nuevoArrayDeObjeto = valuesObjeto.map((elemento,i) => {
+            return {'id': keysObjeto[i], ...elemento};
         })
-      
-        return arrayFinal
-      }
-      
+
+        return nuevoArrayDeObjeto;    
 }
